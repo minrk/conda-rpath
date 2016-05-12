@@ -14,7 +14,7 @@ Fixes loading of libraries linked against these
 Only for use on OS X
 """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 import os
 import pipes
@@ -86,7 +86,6 @@ def patch_rpaths(path):
             continue
         old_id = get_id(dylib)
         if '@rpath' not in old_id:
-            print("Adding @rpath to %s" % dylib)
             break_hardlink(dylib)
             add_rpath(dylib, old_id)
             new_id = get_id(dylib)
