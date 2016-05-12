@@ -13,3 +13,7 @@ so only the given env is affected.
 
 Only for use on OS X.
 
+conda install:
+
+    conda install -c minrk patch-conda-rpaths
+
