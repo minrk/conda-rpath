@@ -21,7 +21,7 @@ import pipes
 import shutil
 import sys
 import glob
-from subprocess import check_output, check_call
+from subprocess import check_output, Popen, PIPE
 
 join = os.path.join
 
@@ -65,7 +65,16 @@ def add_rpath(dylib, name):
     """
     cmd = ['install_name_tool', '-id', "@rpath/%s" % name, dylib]
     print(' '.join(map(pipes.quote, cmd)))
-    check_call(cmd)
+    p = Popen(cmd, stderr=PIPE)
+    stdout, stderr = p.communicate()
+    stderr = stderr.decode('utf-8')
+    # stub check from conda-build
+    if "Mach-O dynamic shared library stub file" in stderr:
+        print("Skipping Mach-O dynamic shared library stub file %s\n" % dylib)
+        return
+    print(stderr, file=sys.stderr)
+    if p.returncode:
+        raise RuntimeError("install_name_tool failed with exit status %d" % p.returncode)
 
 
 def patch_rpaths(path):
