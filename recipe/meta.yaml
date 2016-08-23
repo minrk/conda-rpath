@@ -5,8 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  git_rev: {{ version }}
-  git_url: https://github.com/minrk/patch-conda-rpath
+  path: ..
 
 build:
   skip: true  # [not osx]
