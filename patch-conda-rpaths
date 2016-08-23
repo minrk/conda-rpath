@@ -14,7 +14,7 @@ Fixes loading of libraries linked against these
 Only for use on OS X
 """
 
-__version__ = '0.1.2'
+__version__ = '0.1.3.dev'
 
 import os
 import pipes
